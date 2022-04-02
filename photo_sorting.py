@@ -1,3 +1,6 @@
+import color
+
+
 class PhotoLib:
     def __init__(self, x: iter = None):
         if x:
@@ -21,3 +24,11 @@ class Photo:
     def __init__(self, pixel_array: list, name: str):
         self.name = name
         self.pixels = pixel_array
+
+    def greyscale(self):
+        grey = list()
+        for i in self.pixels:
+            grey.append(list())
+            for j in i:
+                col = (j.r + j.g + j.b) / 3
+                grey[-1].append(color.Color(col, col, col))
