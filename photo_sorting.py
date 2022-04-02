@@ -5,7 +5,7 @@ class PhotoLib:
         else:
             self.photos = list()
 
-    ## returns a list of photos sorted by a given function
+    # returns a list of photos sorted by a given function
     def sort(self, fun):
         photos = list()
 
