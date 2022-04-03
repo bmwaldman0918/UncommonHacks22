@@ -23,10 +23,13 @@ validDir = False
 sorted = list()
 isSort = False
 currIndex = 0
+
+
 def quitted():
     sys.exit()
 
-def allImageFiles(path : str):
+
+def allImageFiles(path: str):
     for file in os.listdir(path):
         f = os.path.join(path, file)
         if not os.path.isfile(f):
@@ -40,7 +43,8 @@ def allImageFiles(path : str):
                 continue
     files_to_PhotoLib()
 
-def file_to_Photo(f : str):
+
+def file_to_Photo(f: str):
     numpy_arr = jpeg_to_4vector(f)
     ph = Photo(numpy_arr, f)
     return ph
@@ -54,13 +58,13 @@ def files_to_PhotoLib():
     photos = PhotoLib(ls)
     print(photos.photos)
 
+
 def phList_to_fileList():
     global fileList
     fileList = list()
     for photo in sorted:
         fileList.append(photo.name)
     print(fileList)
-
 
 
 def open_image():
@@ -91,7 +95,7 @@ def open_image():
         image_display.title("Image Viewer")
         if not isSort:
             allImageFiles(dir)
-            sorted = photos.sort(Photo.comp_by_col(c = rgb))
+            sorted = photos.sort(Photo.comp_by_col(c=rgb))
             phList_to_fileList()
             isSort = True
         display(fileList[0])
@@ -108,8 +112,10 @@ def display(name):
     img = ImageTk.PhotoImage(imgf)
     canvas.create_image(0, 0, anchor=NW, image=img)
 
+
 def buttonWithdraw(bt: Button):
     bt.withdraw()
+
 
 def ableSelectButton(*attr):
     global button1
@@ -120,6 +126,7 @@ def ableSelectButton(*attr):
         button2["state"] = DISABLED
         button3["state"] = DISABLED
         isSort = False
+
 
 def goNext():
     global canvas
@@ -133,6 +140,7 @@ def goNext():
         button3["state"] = DISABLED
     print(fileList[currIndex])
 
+
 def goPrev():
     global currIndex
     canvas.delete("all")
@@ -141,30 +149,32 @@ def goPrev():
     if currIndex == 0:
         button3["state"] = DISABLED
 
-root = Tk()
-root.title("Search for a file")
-root.geometry("800x500")
-colChoose = StringVar(root)
-tex1 = Label(root, text="Directory")
-tex1.grid(row=0, column=0)
-tex2 = Label(root, text="Color")
-tex2.grid(row=1, column=0)
-e1 = Entry(root)
-col = OptionMenu(root, colChoose, "red", "green", "blue", "grey", "black", "white", command=ableSelectButton)
-e1.grid(row=0,column=1)
-col.grid(row=1,column=1)
-col = OptionMenu(root, colChoose, "red", "green", "blue", "grey", "black", "white")
-e1.grid(row=0, column=1)
-col.grid(row=1, column=1)
-button1 = Button(root, text="sort", bd=2, command=open_image)
-button1.grid(row=2, column=0)
-button2 = Button(root, text= "prev", bd=2, command=goPrev, state=DISABLED)
-button3 = Button(root, text= "next", bd=2, command=goNext, state=DISABLED)
-button2.grid(row=2, column=1)
-button3.grid(row=2, column=2)
-root.protocol("WM_DELETE_WINDOW", quitted)
-print(colChoose)
 
-root.mainloop()
-print(colChoose)
-root.mainloop()
+if __name__ == "__main__":
+    root = Tk()
+    root.title("Search for a file")
+    root.geometry("800x500")
+    colChoose = StringVar(root)
+    tex1 = Label(root, text="Directory")
+    tex1.grid(row=0, column=0)
+    tex2 = Label(root, text="Color")
+    tex2.grid(row=1, column=0)
+    e1 = Entry(root)
+    col = OptionMenu(root, colChoose, "red", "green", "blue", "grey", "black", "white", command=ableSelectButton)
+    e1.grid(row=0, column=1)
+    col.grid(row=1, column=1)
+    col = OptionMenu(root, colChoose, "red", "green", "blue", "grey", "black", "white")
+    e1.grid(row=0, column=1)
+    col.grid(row=1, column=1)
+    button1 = Button(root, text="sort", bd=2, command=open_image)
+    button1.grid(row=2, column=0)
+    button2 = Button(root, text="prev", bd=2, command=goPrev, state=DISABLED)
+    button3 = Button(root, text="next", bd=2, command=goNext, state=DISABLED)
+    button2.grid(row=2, column=1)
+    button3.grid(row=2, column=2)
+    root.protocol("WM_DELETE_WINDOW", quitted)
+    print(colChoose)
+
+    root.mainloop()
+    print(colChoose)
+    root.mainloop()
