@@ -158,7 +158,6 @@ if __name__ == "__main__":
     col = OptionMenu(root, colChoose, "red", "green", "blue", "grey", "black", "white", command=ableSelectButton)
     e1.grid(row=0,column=1)
     col.grid(row=1,column=1)
-    col = OptionMenu(root, colChoose, "red", "green", "blue", "grey", "black", "white")
     e1.grid(row=0, column=1)
     col.grid(row=1, column=1)
     button1 = Button(root, text="sort", bd=2, command=open_image)
