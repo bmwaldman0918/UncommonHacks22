@@ -72,7 +72,10 @@ def open_image():
     global button2
     global sorted
     global isSort
-    dir = e1.get()
+    global image_display
+    global currIndex
+    dir = 0
+    currIndex = 0;
     directory = e1.get()
     try:
         rgb.red = coldict[colChoose.get()][0]
@@ -108,8 +111,6 @@ def display(name):
     img = ImageTk.PhotoImage(imgf)
     canvas.create_image(0, 0, anchor=NW, image=img)
 
-def buttonWithdraw(bt: Button):
-    bt.withdraw()
 
 def ableSelectButton(*attr):
     global button1
@@ -138,8 +139,10 @@ def goPrev():
     canvas.delete("all")
     currIndex -= 1
     display(fileList[currIndex])
+    if currIndex < len(fileList) - 1:
+        button3["state"] = NORMAL
     if currIndex == 0:
-        button3["state"] = DISABLED
+        button2["state"] = DISABLED
 
 root = Tk()
 root.title("Search for a file")
@@ -163,7 +166,9 @@ button3 = Button(root, text= "next", bd=2, command=goNext, state=DISABLED)
 button2.grid(row=2, column=1)
 button3.grid(row=2, column=2)
 root.protocol("WM_DELETE_WINDOW", quitted)
+image_display = Toplevel()
 print(colChoose)
+
 
 root.mainloop()
 print(colChoose)
