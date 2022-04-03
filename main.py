@@ -163,7 +163,7 @@ button3 = Button(root, text= "next", bd=2, command=goNext, state=DISABLED)
 button2.grid(row=2, column=1)
 button3.grid(row=2, column=2)
 root.protocol("WM_DELETE_WINDOW", quitted)
-print (colChoose)
+print(colChoose)
 
 root.mainloop()
 print(colChoose)

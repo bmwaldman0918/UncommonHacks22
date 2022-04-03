@@ -24,8 +24,8 @@ class Photo:
         self.pixels = list()
         if pixel_array is list:
             self.pixels = pixel_array
-        elif pixel_array is numpy.ndarray:
-            self.pixels = numpy.tolist(pixel_array)
+        else:
+            self.pixels = numpy.ndarray.tolist(pixel_array)
             for row in self.pixels:
                 for col in range(len(row)):
                     row[col] = color.Color(row[col][0], row[col][1], row[col][2])
@@ -48,9 +48,10 @@ class Photo:
         total_dist = 0.0
         count = 0
         print(self.pixels)
-        for pixel in self.pixels:
-            count += 1
-            total_dist += color.colDistance(c, pixel)
+        for row in self.pixels:
+            for pixel in row:
+                count += 1
+                total_dist += color.colDistance(c, pixel)
         try:
             print("avg Dist: " + str(total_dist / count))
             return total_dist / count
