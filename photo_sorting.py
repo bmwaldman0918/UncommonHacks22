@@ -30,7 +30,6 @@ class Photo:
                 for col in range(len(row)):
                     row[col] = color.Color(row[col][0], row[col][1], row[col][2])
 
-
     def greyscale(self):
         avg, count = 0, 0
         for i in self.pixels:
@@ -43,23 +42,18 @@ class Photo:
 
     @staticmethod
     def comp_by_col(c: color.Color):
-        return lambda x: x.colDist(c)
+        return lambda x: x.col_dist(c)
 
-    def colDist(self, c):
-        totalDist= 0.0
+    def col_dist(self, c):
+        total_dist = 0.0
         count = 0
-        print (self.pixels)
+        print(self.pixels)
         for pixel in self.pixels:
             count += 1
-            totalDist += color.colDistance(c, pixel)
+            total_dist += color.colDistance(c, pixel)
         try:
-            print("avg Dist: " + str(totalDist / count))
-            return totalDist / count
+            print("avg Dist: " + str(total_dist / count))
+            return total_dist / count
         except ZeroDivisionError:
-            print("total Dist: " + str(totalDist))
-            return totalDist
-
-
-
-
-
+            print("total Dist: " + str(total_dist))
+            return total_dist
