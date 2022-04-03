@@ -27,6 +27,7 @@ def quitted():
     sys.exit()
 
 def allImageFiles(path : str):
+    print("path is: " + path)
     for file in os.listdir(path):
         f = os.path.join(path, file)
         if not os.path.isfile(f):
@@ -74,8 +75,8 @@ def open_image():
     global isSort
     global image_display
     global currIndex
-    dir = 0
     currIndex = 0;
+    dir = e1.get()
     directory = e1.get()
     try:
         rgb.red = coldict[colChoose.get()][0]
@@ -147,7 +148,7 @@ def goPrev():
 if __name__ == "__main__":
     root = Tk()
     root.title("Search for a file")
-    root.geometry("800x500")
+    root.geometry("300x300")
     colChoose = StringVar(root)
     tex1 = Label(root, text="Directory")
     tex1.grid(row=0, column=0)
