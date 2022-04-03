@@ -16,7 +16,7 @@ class PhotoLib:
         for i in self.photos:
             photos.append(tuple(i, fun(i)))
 
-        photos.sort(key=lambda x: x[1], reverse = True)
+        photos.sort(key=lambda x: x[1], reverse=True)
 
         return photos
 
@@ -37,12 +37,14 @@ class Photo:
 
 
     def greyscale(self):
-        grey = list()
+        avg, count = 0
         for i in self.pixels:
-            grey.append(list())
             for j in i:
-                col = (j.red + j.green + j.blue) / 3
-                grey[-1].append(color.Color(col, col, col))
+                grey = (j.red + j.green + j.blue) / 3
+                avg += color.colDistance(j, grey)
+                count += 1
+
+        return avg / count
 
     def avgColor(self):
         avgr = 0
