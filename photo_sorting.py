@@ -13,7 +13,7 @@ class PhotoLib:
     def sort(self, fun):
         sorted_photos = list(self.photos)
 
-        sorted_photos.sort(key=fun, reverse=True)
+        sorted_photos.sort(key=fun, reverse=False)
 
         return sorted_photos
 
@@ -47,14 +47,13 @@ class Photo:
     def col_dist(self, c):
         total_dist = 0.0
         count = 0
-        print(self.pixels)
         for row in self.pixels:
             for pixel in row:
                 count += 1
                 total_dist += color.colDistance(c, pixel)
         try:
-            print("avg Dist: " + str(total_dist / count))
+            # print("avg Dist: " + str(total_dist / count))
             return total_dist / count
         except ZeroDivisionError:
-            print("total Dist: " + str(total_dist))
+            # print("total Dist: " + str(total_dist))
             return total_dist

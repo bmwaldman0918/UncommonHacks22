@@ -100,8 +100,8 @@ def open_image():
             isSort = True
         display(fileList[0])
 
-    print(dir)
-    print(rgb)
+    # print(dir)
+    # print(rgb)
 
 
 def display(name):
@@ -138,7 +138,7 @@ def goNext():
         button2["state"] = NORMAL
     if currIndex == len(fileList) - 1:
         button3["state"] = DISABLED
-    print(fileList[currIndex])
+    # print(fileList[currIndex])
 
 
 def goPrev():
