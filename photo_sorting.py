@@ -49,9 +49,12 @@ class Photo:
         avgg /= count
         return color.Color(avgr, avgb, avgg)
 
-
-def compPhoto(c, p1):
-    return color.colDistance(c, p1.avgcol)
+    def colDist(self, c):
+        totalDist = 0.0
+        for pixel in self.pixels:
+            totalDist += color.colDistance(c, pixel) / \
+                         color.colDistance(color.Color(255, 255, 255), color.Color(0, 0, 0))
+        return totalDist
 
 
 
