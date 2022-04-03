@@ -3,7 +3,8 @@ from tkinter import messagebox
 from PIL import ImageTk, Image
 import sys
 import os
-from photo_sorting import PhotoLib
+from photo_sorting import PhotoLib, Photo
+from jpeg_to_array import jpeg_to_4vector
 from color import Color
 
 coldict = {"red": (255, 0, 0), "green": (0, 255, 0), "blue": (0, 0, 255), "white": (0, 0, 0),
@@ -13,14 +14,13 @@ rgb = Color()
 grey = False
 dir = ""
 fileList = list()
-photos = list()
 validDir = False
 rgb = Color()
 grey = False
 directory = ""
 fileList = list()
 validDir = False
-
+sorted = list()
 
 def quitted():
     sys.exit()
@@ -37,15 +37,20 @@ def allImageFiles(path : str):
                 fileList.append(f);
             except Exception:
                 continue
-    print (fileList)
+    files_to_PhotoLib()
 
-def file_to_Photo():
-    pass
+def file_to_Photo(f : str):
+    numpy_arr = jpeg_to_4vector(f)
+    ph = Photo(numpy_arr, f)
+    return ph
 
 
 def files_to_PhotoLib():
+    global photos
+    ls = list()
     for file in fileList:
-        pass
+        ls.append(file_to_Photo(file))
+    photos = PhotoLib(ls)
 
 
 
@@ -56,6 +61,7 @@ def open_image():
     global validDir
     global canvas
     global button2
+    global sorted
     dir = e1.get()
     directory = e1.get()
     try:
@@ -77,6 +83,7 @@ def open_image():
         display("image.jpg")
         display("0001.jpg")
         allImageFiles(dir)
+        sorted = photos.sort(colDist)
     print(dir)
     print(rgb)
 
