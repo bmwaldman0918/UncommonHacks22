@@ -27,14 +27,14 @@ class Photo:
             self.pixels = numpy.aslist(pixel_array)
             for row in self.pixels:
                 for col in range(len(row)):
-                    row[col] = color(row[col][0], row[col][1], row[col][2])
+                    row[col] = color.Color(row[col][0], row[col][1], row[col][2])
 
         self.avgcol = self.avgColor()
 
 
 
     def greyscale(self):
-        avg, count = 0
+        avg, count = 0, 0
         for i in self.pixels:
             for j in i:
                 grey = (j.red + j.green + j.blue) / 3
@@ -57,6 +57,9 @@ class Photo:
         avgb /= count
         avgg /= count
         return color.Color(avgr, avgb, avgg)
+
+    def comp_by_col(self, c: color.Color):
+        return lambda x: x.colDist(c)
 
     def colDist(self, c):
         totalDist = 0.0
