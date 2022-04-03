@@ -21,16 +21,14 @@ class PhotoLib:
 class Photo:
     def __init__(self, pixel_array, name: str):
         self.name = name
+        self.pixels = list()
         if pixel_array is list:
             self.pixels = pixel_array
         elif pixel_array is numpy.ndarray:
-            self.pixels = numpy.aslist(pixel_array)
+            self.pixels = numpy.tolist(pixel_array)
             for row in self.pixels:
                 for col in range(len(row)):
                     row[col] = color.Color(row[col][0], row[col][1], row[col][2])
-
-        self.avgcol = self.avgColor()
-
 
 
     def greyscale(self):
@@ -43,30 +41,24 @@ class Photo:
 
         return avg / count
 
-    def avgColor(self):
-        avgr = 0
-        avgg = 0
-        avgb = 0
-        count = 0
-        for pixel in self.pixels:
-            avgr += pixel.red
-            avgg += pixel.green
-            avgb += pixel.blue
-            count += 1
-        avgr /= count
-        avgb /= count
-        avgg /= count
-        return color.Color(avgr, avgb, avgg)
-
-    def comp_by_col(self, c: color.Color):
+    @staticmethod
+    def comp_by_col(c: color.Color):
         return lambda x: x.colDist(c)
 
     def colDist(self, c):
-        totalDist = 0.0
+        totalDist= 0.0
+        count = 0
+        print (self.pixels)
         for pixel in self.pixels:
-            totalDist += color.colDistance(c, pixel) / \
-                         color.colDistance(color.Color(255, 255, 255), color.Color(0, 0, 0))
-        return totalDist
+            count += 1
+            totalDist += color.colDistance(c, pixel)
+        try:
+            print("avg Dist: " + str(totalDist / count))
+            return totalDist / count
+        except ZeroDivisionError:
+            print("total Dist: " + str(totalDist))
+            return totalDist
+
 
 
 

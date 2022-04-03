@@ -21,7 +21,8 @@ directory = ""
 fileList = list()
 validDir = False
 sorted = list()
-
+isSort = False
+currIndex = 0
 def quitted():
     sys.exit()
 
@@ -51,6 +52,14 @@ def files_to_PhotoLib():
     for file in fileList:
         ls.append(file_to_Photo(file))
     photos = PhotoLib(ls)
+    print(photos.photos)
+
+def phList_to_fileList():
+    global fileList
+    fileList = list()
+    for photo in sorted:
+        fileList.append(photo.name)
+    print(fileList)
 
 
 
@@ -62,6 +71,7 @@ def open_image():
     global canvas
     global button2
     global sorted
+    global isSort
     dir = e1.get()
     directory = e1.get()
     try:
@@ -79,11 +89,13 @@ def open_image():
         canvas.pack()
         button3["state"] = NORMAL
         image_display.title("Image Viewer")
-        image_display.title("Image Viewer")
-        display("image.jpg")
-        display("0001.jpg")
-        allImageFiles(dir)
-        sorted = photos.sort(colDist)
+        if not isSort:
+            allImageFiles(dir)
+            sorted = photos.sort(Photo.comp_by_col(c = rgb))
+            phList_to_fileList()
+            isSort = True
+        display(fileList[0])
+
     print(dir)
     print(rgb)
 
@@ -101,16 +113,33 @@ def buttonWithdraw(bt: Button):
 
 def ableSelectButton(*attr):
     global button1
+    global isSort
     if button1["state"] == DISABLED:
         button1["state"] = NORMAL
+    if isSort:
+        button2["state"] = DISABLED
+        button3["state"] = DISABLED
+        isSort = False
 
 def goNext():
     global canvas
+    global currIndex
     canvas.delete("all")
-
+    currIndex += 1
+    display(fileList[currIndex])
+    if currIndex > 0:
+        button2["state"] = NORMAL
+    if currIndex == len(fileList) - 1:
+        button3["state"] = DISABLED
+    print(fileList[currIndex])
 
 def goPrev():
-    pass
+    global currIndex
+    canvas.delete("all")
+    currIndex -= 1
+    display(fileList[currIndex])
+    if currIndex == 0:
+        button3["state"] = DISABLED
 
 root = Tk()
 root.title("Search for a file")
