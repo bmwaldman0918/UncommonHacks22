@@ -10,8 +10,5 @@ img = Image.open('Sample.png')
 # PIL images into NumPy arrays
 numpydata = asarray(img)
 
-# <class 'numpy.ndarray'>
-print(type(numpydata))
 
-#  shape
-print(numpydata.shape)
+
