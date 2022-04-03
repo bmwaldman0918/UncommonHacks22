@@ -1,4 +1,5 @@
 import color
+import numpy
 
 
 class PhotoLib:
@@ -15,24 +16,35 @@ class PhotoLib:
         for i in self.photos:
             photos.append(tuple(i, fun(i)))
 
-        photos.sort(key=lambda x: x[1], reverse = True)
+        photos.sort(key=lambda x: x[1], reverse=True)
 
         return photos
 
 
 class Photo:
-    def __init__(self, pixel_array: list, name: str):
+    def __init__(self, pixel_array, name: str):
         self.name = name
-        self.pixels = pixel_array
+        if pixel_array is list:
+            self.pixels = pixel_array
+        elif pixel_array is numpy.ndarray:
+            self.pixels = numpy.aslist(pixel_array)
+            for row in self.pixels:
+                for col in range(len(row)):
+                    row[col] = color(row[col][0], row[col][1], row[col][2])
+
         self.avgcol = self.avgColor()
 
+
+
     def greyscale(self):
-        grey = list()
+        avg, count = 0
         for i in self.pixels:
-            grey.append(list())
             for j in i:
-                col = (j.red + j.green + j.blue) / 3
-                grey[-1].append(color.Color(col, col, col))
+                grey = (j.red + j.green + j.blue) / 3
+                avg += color.colDistance(j, grey)
+                count += 1
+
+        return avg / count
 
     def avgColor(self):
         avgr = 0
