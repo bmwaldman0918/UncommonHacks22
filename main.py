@@ -7,19 +7,16 @@ from photo_sorting import PhotoLib, Photo
 from jpeg_to_array import jpeg_to_4vector
 from color import Color
 
-coldict = {"red": (255, 0, 0), "green": (0, 255, 0), "blue": (0, 0, 255), "white": (0, 0, 0),
-           "black": (255, 255, 255)}
+coldict = {"red": (255, 0, 0), "green": (0, 255, 0), "blue": (0, 0, 255), "white": (255, 255, 255),
+           "black": (0, 0, 0)}
 
 rgb = Color()
 grey = False
 dir = ""
 fileList = list()
 validDir = False
-rgb = Color()
-grey = False
+
 directory = ""
-fileList = list()
-validDir = False
 sorted = list()
 isSort = False
 currIndex = 0
@@ -49,7 +46,7 @@ def file_to_Photo(f : str):
 
 def files_to_PhotoLib():
     global photos
-    ls = list()
+    ls = []
     for file in fileList:
         ls.append(file_to_Photo(file))
     photos = PhotoLib(ls)
@@ -57,7 +54,7 @@ def files_to_PhotoLib():
 
 def phList_to_fileList():
     global fileList
-    fileList = list()
+    fileList = []
     for photo in sorted:
         fileList.append(photo.name)
     print(fileList)
@@ -75,7 +72,7 @@ def open_image():
     global isSort
     global image_display
     global currIndex
-    currIndex = 0;
+    currIndex = 0
     dir = e1.get()
     directory = e1.get()
     try:
@@ -95,7 +92,10 @@ def open_image():
         image_display.title("Image Viewer")
         if not isSort:
             allImageFiles(dir)
-            sorted = photos.sort(Photo.comp_by_col(c = rgb))
+            if grey:
+                sorted = photos.sort(Photo.greyscale)
+            else:
+                sorted = photos.sort(Photo.comp_by_col(c = rgb))
             phList_to_fileList()
             isSort = True
         display(fileList[0])
@@ -116,11 +116,13 @@ def display(name):
 def ableSelectButton(*attr):
     global button1
     global isSort
+    global fileList
     if button1["state"] == DISABLED:
         button1["state"] = NORMAL
     if isSort:
         button2["state"] = DISABLED
         button3["state"] = DISABLED
+        fileList = []
         isSort = False
 
 def goNext():
@@ -167,11 +169,9 @@ if __name__ == "__main__":
     button2.grid(row=2, column=1)
     button3.grid(row=2, column=2)
     root.protocol("WM_DELETE_WINDOW", quitted)
-    image_display = Toplevel()
     print(colChoose)
 
 
     root.mainloop()
     print(colChoose)
-    root.mainloop()
 
