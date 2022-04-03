@@ -11,14 +11,11 @@ class PhotoLib:
 
     # returns a list of photos sorted by a given function
     def sort(self, fun):
-        photos = list()
+        sorted_photos = list(self.photos)
 
-        for i in self.photos:
-            photos.append(tuple(i, fun(i)))
+        sorted_photos.sort(key=fun, reverse=True)
 
-        photos.sort(key=lambda x: x[1], reverse=True)
-
-        return photos
+        return sorted_photos
 
 
 class Photo:
